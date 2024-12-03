@@ -3,8 +3,9 @@ from hone import get_instill_engine
 
 
 def main():
+
     engine = get_instill_engine(
-        "gpt-4o",
+        "gpt-3.5-turbo",
         namespace_id="george_strong",
         pipeline_id="textgrad-openai-engine"
     )
@@ -31,11 +32,11 @@ def main():
         engine=engine
     )
 
-    l = loss(x)
-    l.backward(engine)
+    loss_value = loss(x)
+    loss_value.backward(engine)
     optimizer.step()
 
-    print("Loss:", l.value)
+    print("Loss:", loss_value.value)
     print("Gradient:", x.gradients)
     print("Optimized sentence:", x.value)
 

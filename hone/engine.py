@@ -10,7 +10,7 @@ class ChatInstill(EngineLM, CachedEngine):
 
     def __init__(
         self,
-        model_string: str = "gpt-4o",
+        model_string: str = "gpt-4o-mini",
         system_prompt: str = DEFAULT_SYSTEM_PROMPT,
         namespace_id: str = None,
         pipeline_id: str = None,
@@ -28,12 +28,13 @@ class ChatInstill(EngineLM, CachedEngine):
         if model_string.startswith("instill-"):
             model_string = model_string.replace("instill-", "")
 
-        root = platformdirs.user_cache_dir("textgrad")
-        cache_path = os.path.join(root, f"cache_instill_{model_string}.db")
-        CachedEngine.__init__(self, cache_path=cache_path)
-
         self.model_string = model_string
         self.system_prompt = system_prompt
+
+        root = platformdirs.user_cache_dir("hone")
+        cache_path = os.path.join(root, f"cache_instill_{self.model_string}.db")
+        CachedEngine.__init__(self, cache_path=cache_path)
+
         self.namespace_id = namespace_id or os.getenv("INSTILL_NAMESPACE_ID")
         self.pipeline_id = pipeline_id or os.getenv("INSTILL_PIPELINE_ID")
 
