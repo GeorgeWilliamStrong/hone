@@ -10,7 +10,10 @@ setup(
     ],
     author="George Strong",
     author_email="george.strong@instill.tech",
-    description="Automates prompt and pipeline optimization for Instill VDP (Versatile Data Pipeline) and Instill Model.",
+    description=(
+        "Automates prompt and pipeline optimization for Instill VDP "
+        "(Versatile Data Pipeline) and Instill Model."
+    ),
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/georgewilliamstrong/hone",

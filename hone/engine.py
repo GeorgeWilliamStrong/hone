@@ -21,8 +21,10 @@ class ChatInstill(EngineLM, CachedEngine):
         Args:
             model_string (str): The model identifier (e.g. "gpt-4o-mini")
             system_prompt (str): Default system prompt for the model
-            namespace_id (str): Instill namespace ID (can also be set via INSTILL_NAMESPACE_ID env var)
-            pipeline_id (str): Instill pipeline ID (can also be set via INSTILL_PIPELINE_ID env var)
+            namespace_id (str): Instill namespace ID can also be set via
+                INSTILL_NAMESPACE_ID env var
+            pipeline_id (str): Instill pipeline ID can also be set via
+                INSTILL_PIPELINE_ID env var
         """
         # Remove "instill-" prefix if present
         if model_string.startswith("instill-"):
@@ -39,26 +41,49 @@ class ChatInstill(EngineLM, CachedEngine):
         self.pipeline_id = pipeline_id or os.getenv("INSTILL_PIPELINE_ID")
 
         if not self.namespace_id or not self.pipeline_id:
-            raise ValueError("namespace_id and pipeline_id must be provided either through constructor or environment variables")
+            raise ValueError(
+                "namespace_id and pipeline_id must be provided either through "
+                "constructor or environment variables"
+            )
 
-        self.pipeline = init_pipeline_client(api_token=os.environ["INSTILL_API_TOKEN"])
+        self.pipeline = init_pipeline_client(
+            api_token=os.environ["INSTILL_API_TOKEN"]
+        )
         self.is_multimodal = False
 
-    def generate(self, content: Union[str, List[Union[str, bytes]]], system_prompt: str = None, **kwargs):
+    def generate(
+        self,
+        content: Union[str, List[Union[str, bytes]]],
+        system_prompt: str = None,
+        **kwargs
+    ):
         """Generate text using the Instill pipeline.
 
         Args:
-            content: Either a string prompt or a list of strings/bytes for multimodal input
+            content: Either a string prompt or a list of strings/bytes for
+                multimodal input
             system_prompt: Optional system prompt to override the default
-            **kwargs: Additional arguments passed to _generate_from_single_prompt
+            **kwargs: Additional arguments passed to
+                _generate_from_single_prompt
         """
         if isinstance(content, str):
-            return self._generate_from_single_prompt(content, system_prompt=system_prompt, **kwargs)
+            return self._generate_from_single_prompt(
+                content, 
+                system_prompt=system_prompt, 
+                **kwargs
+            )
         else:
-            raise NotImplementedError("Multimodal input not supported for ChatInstill")
+            raise NotImplementedError(
+                "Multimodal input not supported for ChatInstill"
+            )
 
     def _generate_from_single_prompt(
-        self, prompt: str, system_prompt: str = None, temperature=0, max_tokens=2000, top_p=0.99
+        self,
+        prompt: str,
+        system_prompt: str = None,
+        temperature: float = 0,
+        max_tokens: int = 2000,
+        top_p: float = 0.99
     ):
         """Generate text from a single prompt using the Instill pipeline.
 
@@ -88,7 +113,9 @@ class ChatInstill(EngineLM, CachedEngine):
             }]
         )
 
-        response_text = pipeline_response.outputs[0].fields['llm-output'].string_value
+        response_text = (
+            pipeline_response.outputs[0].fields['llm-output'].string_value
+        )
         self._save_cache(sys_prompt_arg + prompt, response_text)
         return response_text
 
