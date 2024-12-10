@@ -10,7 +10,7 @@ class ChatInstill(EngineLM, CachedEngine):
 
     def __init__(
         self,
-        model_string: str = "gpt-4o-mini",
+        model_string: str = "gpt-3.5-turbo",
         system_prompt: str = DEFAULT_SYSTEM_PROMPT,
         namespace_id: str = None,
         pipeline_id: str = None,
@@ -26,10 +26,6 @@ class ChatInstill(EngineLM, CachedEngine):
             pipeline_id (str): Instill pipeline ID can also be set via
                 INSTILL_PIPELINE_ID env var
         """
-        # Remove "instill-" prefix if present
-        if model_string.startswith("instill-"):
-            model_string = model_string.replace("instill-", "")
-
         self.model_string = model_string
         self.system_prompt = system_prompt
 
@@ -68,8 +64,8 @@ class ChatInstill(EngineLM, CachedEngine):
         """
         if isinstance(content, str):
             return self._generate_from_single_prompt(
-                content, 
-                system_prompt=system_prompt, 
+                content,
+                system_prompt=system_prompt,
                 **kwargs
             )
         else:

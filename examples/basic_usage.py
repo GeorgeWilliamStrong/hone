@@ -7,7 +7,7 @@ def main():
     engine = get_instill_engine(
         "gpt-3.5-turbo",
         namespace_id="george_strong",
-        pipeline_id="textgrad-openai-engine"
+        pipeline_id="textgrad-engine"
     )
 
     response = engine.generate("What is the capital of France?")
