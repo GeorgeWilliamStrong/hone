@@ -1,3 +1,3 @@
 # 💎 Hone
 
-Automates prompt and pipeline optimisation for [**Instill VDP**](https://www.instill.tech/docs/vdp/introduction) (Versatile Data Pipeline) and [**Instill Model**](https://www.instill.tech/docs/model/introduction).
+Automates prompt and pipeline optimisation for Instill Core [**Pipeline**](https://www.instill-ai.dev/docs/pipeline/introduction) and [**Model**](https://www.instill-ai.dev/docs/model/introduction) services.
